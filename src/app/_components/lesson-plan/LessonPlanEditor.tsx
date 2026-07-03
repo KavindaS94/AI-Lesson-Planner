@@ -3,6 +3,8 @@
 import { TextField } from "@/app/_components/ui/TextField";
 import { TextArea } from "@/app/_components/ui/TextArea";
 import { Button } from "@/app/_components/ui/Button";
+import { AddButton } from "@/app/_components/ui/AddButton";
+import { SectionLabel } from "@/app/_components/ui/SectionLabel";
 import type { LessonPlan } from "@/lib/schemas/lessonPlan";
 
 function StringListEditor({
@@ -16,7 +18,7 @@ function StringListEditor({
 }) {
   return (
     <div>
-      <span className="mb-1 block text-sm font-medium text-gray-700">{label}</span>
+      <SectionLabel>{label}</SectionLabel>
       <div className="space-y-2">
         {items.map((item, i) => (
           <div key={i} className="flex items-start gap-2">
@@ -33,6 +35,8 @@ function StringListEditor({
             <Button
               type="button"
               variant="danger"
+              iconOnly
+              aria-label="Remove"
               onClick={() => onChange(items.filter((_, idx) => idx !== i))}
             >
               ✕
@@ -40,14 +44,7 @@ function StringListEditor({
           </div>
         ))}
       </div>
-      <Button
-        type="button"
-        variant="secondary"
-        className="mt-2"
-        onClick={() => onChange([...items, ""])}
-      >
-        + Add
-      </Button>
+      <AddButton label="+ Add" onClick={() => onChange([...items, ""])} />
     </div>
   );
 }
@@ -60,7 +57,7 @@ export function LessonPlanEditor({
   onChange: (plan: LessonPlan) => void;
 }) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <TextField
         label="Title"
         value={plan.title}
@@ -74,8 +71,8 @@ export function LessonPlanEditor({
       />
 
       <div>
-        <h3 className="mb-2 text-sm font-semibold text-gray-900">Warm-Up</h3>
-        <div className="space-y-2 rounded-md border border-gray-200 p-3">
+        <SectionLabel>Warm-Up</SectionLabel>
+        <div className="space-y-3 rounded-xl border border-gray-200 bg-gray-50/60 p-4">
           <TextField
             label="Title"
             value={plan.warmUp.title}
@@ -106,10 +103,13 @@ export function LessonPlanEditor({
       </div>
 
       <div>
-        <h3 className="mb-2 text-sm font-semibold text-gray-900">Main Activities</h3>
+        <SectionLabel>Main Activities</SectionLabel>
         <div className="space-y-3">
           {plan.mainActivities.map((activity, i) => (
-            <div key={i} className="space-y-2 rounded-md border border-gray-200 p-3">
+            <div
+              key={i}
+              className="space-y-3 rounded-xl border border-gray-200 bg-gray-50/60 p-4"
+            >
               <div className="flex items-start gap-2">
                 <TextField
                   label="Title"
@@ -124,6 +124,8 @@ export function LessonPlanEditor({
                 <Button
                   type="button"
                   variant="danger"
+                  iconOnly
+                  aria-label="Remove activity"
                   className="mt-6"
                   onClick={() =>
                     onChange({
@@ -158,10 +160,8 @@ export function LessonPlanEditor({
             </div>
           ))}
         </div>
-        <Button
-          type="button"
-          variant="secondary"
-          className="mt-2"
+        <AddButton
+          label="+ Add activity"
           onClick={() =>
             onChange({
               ...plan,
@@ -171,9 +171,7 @@ export function LessonPlanEditor({
               ],
             })
           }
-        >
-          + Add activity
-        </Button>
+        />
       </div>
 
       <StringListEditor
@@ -183,8 +181,8 @@ export function LessonPlanEditor({
       />
 
       <div>
-        <h3 className="mb-2 text-sm font-semibold text-gray-900">Assessment</h3>
-        <div className="space-y-2 rounded-md border border-gray-200 p-3">
+        <SectionLabel>Assessment</SectionLabel>
+        <div className="space-y-3 rounded-xl border border-gray-200 bg-gray-50/60 p-4">
           <TextArea
             label="Instructions"
             rows={2}

@@ -67,7 +67,7 @@ export function QuizForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-5">
       <TextField
         label="Topic"
         placeholder="e.g. The water cycle"
@@ -77,67 +77,81 @@ export function QuizForm({
         disabled={disabled}
       />
 
-      <TextField
-        label="Subject (optional)"
-        value={values.subject ?? ""}
-        onChange={(e) => setValues({ ...values, subject: e.target.value })}
-        disabled={disabled}
-      />
+      <div className="grid gap-5 sm:grid-cols-2">
+        <TextField
+          label="Subject (optional)"
+          value={values.subject ?? ""}
+          onChange={(e) => setValues({ ...values, subject: e.target.value })}
+          disabled={disabled}
+        />
 
-      <TextField
-        label="Grade level (optional)"
-        value={values.gradeLevel ?? ""}
-        onChange={(e) => setValues({ ...values, gradeLevel: e.target.value })}
-        disabled={disabled}
-      />
+        <TextField
+          label="Grade level (optional)"
+          value={values.gradeLevel ?? ""}
+          onChange={(e) => setValues({ ...values, gradeLevel: e.target.value })}
+          disabled={disabled}
+        />
+      </div>
 
       <div>
-        <span className="mb-1 block text-sm font-medium text-gray-700">Question types</span>
-        <div className="flex flex-wrap gap-3">
-          {QUESTION_TYPES.map(({ value, label }) => (
-            <label key={value} className="flex items-center gap-2 text-sm text-gray-700">
-              <input
-                type="checkbox"
-                checked={values.questionTypes.includes(value)}
-                onChange={() => toggleType(value)}
+        <span className="mb-1.5 block text-sm font-medium text-gray-700">Question types</span>
+        <div className="flex flex-wrap gap-2">
+          {QUESTION_TYPES.map(({ value, label }) => {
+            const selected = values.questionTypes.includes(value);
+            return (
+              <button
+                key={value}
+                type="button"
+                aria-pressed={selected}
                 disabled={disabled}
-              />
-              {label}
-            </label>
-          ))}
+                onClick={() => toggleType(value)}
+                className={`rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
+                  selected
+                    ? "border-blue-600 bg-blue-50 text-blue-700"
+                    : "border-gray-300 bg-white text-gray-600 hover:bg-gray-50"
+                }`}
+              >
+                {label}
+              </button>
+            );
+          })}
         </div>
         {errors.questionTypes && (
-          <span className="mt-1 block text-xs text-red-600">{errors.questionTypes}</span>
+          <span className="mt-1.5 block text-xs text-red-600">{errors.questionTypes}</span>
         )}
       </div>
 
-      <TextField
-        label="Number of questions"
-        type="number"
-        min={1}
-        max={20}
-        value={values.questionCount}
-        onChange={(e) => setValues({ ...values, questionCount: Number(e.target.value) })}
-        error={errors.questionCount}
-        disabled={disabled}
-      />
+      <div className="grid gap-5 sm:grid-cols-2">
+        <TextField
+          label="Number of questions"
+          type="number"
+          min={1}
+          max={20}
+          value={values.questionCount}
+          onChange={(e) => setValues({ ...values, questionCount: Number(e.target.value) })}
+          error={errors.questionCount}
+          disabled={disabled}
+        />
 
-      <Select
-        label="Difficulty"
-        value={values.difficulty}
-        onChange={(e) =>
-          setValues({ ...values, difficulty: e.target.value as QuizRequest["difficulty"] })
-        }
-        disabled={disabled}
-      >
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-      </Select>
+        <Select
+          label="Difficulty"
+          value={values.difficulty}
+          onChange={(e) =>
+            setValues({ ...values, difficulty: e.target.value as QuizRequest["difficulty"] })
+          }
+          disabled={disabled}
+        >
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </Select>
+      </div>
 
-      <Button type="submit" disabled={disabled}>
-        Generate quiz
-      </Button>
+      <div className="border-t border-gray-100 pt-5">
+        <Button type="submit" disabled={disabled} className="w-full sm:w-auto">
+          Generate quiz
+        </Button>
+      </div>
     </form>
   );
 }

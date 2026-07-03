@@ -64,28 +64,30 @@ export function LessonPlanForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <TextField
-        label="Subject"
-        placeholder="e.g. Science"
-        value={values.subject}
-        onChange={(e) => setValues({ ...values, subject: e.target.value })}
-        error={errors.subject}
-        disabled={disabled}
-      />
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="grid gap-5 sm:grid-cols-2">
+        <TextField
+          label="Subject"
+          placeholder="e.g. Science"
+          value={values.subject}
+          onChange={(e) => setValues({ ...values, subject: e.target.value })}
+          error={errors.subject}
+          disabled={disabled}
+        />
 
-      <Select
-        label="Grade level"
-        value={values.gradeLevel}
-        onChange={(e) => setValues({ ...values, gradeLevel: e.target.value })}
-        disabled={disabled}
-      >
-        {GRADE_LEVELS.map((grade) => (
-          <option key={grade} value={grade}>
-            {grade}
-          </option>
-        ))}
-      </Select>
+        <Select
+          label="Grade level"
+          value={values.gradeLevel}
+          onChange={(e) => setValues({ ...values, gradeLevel: e.target.value })}
+          disabled={disabled}
+        >
+          {GRADE_LEVELS.map((grade) => (
+            <option key={grade} value={grade}>
+              {grade}
+            </option>
+          ))}
+        </Select>
+      </div>
 
       {values.gradeLevel === "Other" && (
         <TextField
@@ -98,29 +100,33 @@ export function LessonPlanForm({
         />
       )}
 
-      <TextField
-        label="Topic"
-        placeholder="e.g. Photosynthesis"
-        value={values.topic}
-        onChange={(e) => setValues({ ...values, topic: e.target.value })}
-        error={errors.topic}
-        disabled={disabled}
-      />
+      <div className="grid gap-5 sm:grid-cols-2">
+        <TextField
+          label="Topic"
+          placeholder="e.g. Photosynthesis"
+          value={values.topic}
+          onChange={(e) => setValues({ ...values, topic: e.target.value })}
+          error={errors.topic}
+          disabled={disabled}
+        />
 
-      <TextField
-        label="Duration (minutes)"
-        type="number"
-        min={5}
-        max={240}
-        value={values.durationMinutes}
-        onChange={(e) => setValues({ ...values, durationMinutes: Number(e.target.value) })}
-        error={errors.durationMinutes}
-        disabled={disabled}
-      />
+        <TextField
+          label="Duration (minutes)"
+          type="number"
+          min={5}
+          max={240}
+          value={values.durationMinutes}
+          onChange={(e) => setValues({ ...values, durationMinutes: Number(e.target.value) })}
+          error={errors.durationMinutes}
+          disabled={disabled}
+        />
+      </div>
 
-      <Button type="submit" disabled={disabled}>
-        Generate lesson plan
-      </Button>
+      <div className="border-t border-gray-100 pt-5">
+        <Button type="submit" disabled={disabled} className="w-full sm:w-auto">
+          Generate lesson plan
+        </Button>
+      </div>
     </form>
   );
 }

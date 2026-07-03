@@ -6,20 +6,24 @@ type Variant = "primary" | "secondary" | "danger";
 
 const VARIANT_CLASSES: Record<Variant, string> = {
   primary:
-    "bg-blue-600 text-white hover:bg-blue-700 disabled:bg-blue-300",
+    "bg-blue-600 text-white shadow-sm hover:bg-blue-700 focus-visible:ring-blue-500 disabled:bg-blue-300",
   secondary:
-    "bg-white text-gray-900 border border-gray-300 hover:bg-gray-50 disabled:text-gray-400",
-  danger: "bg-red-50 text-red-600 hover:bg-red-100 disabled:text-red-300",
+    "border border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 focus-visible:ring-blue-500 disabled:text-gray-400",
+  danger:
+    "text-gray-400 hover:bg-red-50 hover:text-red-600 focus-visible:ring-red-500 disabled:text-gray-300",
 };
 
 export function Button({
   variant = "primary",
+  iconOnly = false,
   className = "",
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: Variant }) {
+}: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: Variant; iconOnly?: boolean }) {
   return (
     <button
-      className={`rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed ${VARIANT_CLASSES[variant]} ${className}`}
+      className={`inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed ${
+        iconOnly ? "h-9 w-9 shrink-0 text-base" : "px-4 py-2 text-sm"
+      } ${VARIANT_CLASSES[variant]} ${className}`}
       {...props}
     />
   );

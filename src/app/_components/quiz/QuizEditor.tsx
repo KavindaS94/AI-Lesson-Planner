@@ -2,6 +2,7 @@
 
 import { TextField } from "@/app/_components/ui/TextField";
 import { Button } from "@/app/_components/ui/Button";
+import { AddButton } from "@/app/_components/ui/AddButton";
 import type { Quiz, QuizQuestion } from "@/lib/schemas/quiz";
 import { McqQuestionEditor } from "./McqQuestionEditor";
 import { ShortAnswerQuestionEditor } from "./ShortAnswerQuestionEditor";
@@ -11,6 +12,12 @@ const BLANK_QUESTION: Record<QuizQuestion["type"], QuizQuestion> = {
   mcq: { type: "mcq", question: "", options: ["", "", "", ""], correctOptionIndex: 0 },
   "short-answer": { type: "short-answer", question: "", sampleAnswer: "" },
   "fill-in-blank": { type: "fill-in-blank", textWithBlank: "", answer: "" },
+};
+
+const TYPE_LABELS: Record<QuizQuestion["type"], string> = {
+  mcq: "Multiple choice",
+  "short-answer": "Short answer",
+  "fill-in-blank": "Fill in the blank",
 };
 
 function QuestionEditor({
@@ -50,14 +57,21 @@ export function QuizEditor({
 
       <div className="space-y-3">
         {quiz.questions.map((question, i) => (
-          <div key={i} className="space-y-2 rounded-md border border-gray-200 p-3">
-            <div className="flex items-start justify-between">
-              <span className="text-xs font-medium uppercase text-gray-500">
-                Question {i + 1} · {question.type}
-              </span>
+          <div key={i} className="space-y-3 rounded-xl border border-gray-200 bg-gray-50/60 p-4">
+            <div className="flex items-start justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-xs font-semibold text-blue-700">
+                  {i + 1}
+                </span>
+                <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                  {TYPE_LABELS[question.type]}
+                </span>
+              </div>
               <Button
                 type="button"
                 variant="danger"
+                iconOnly
+                aria-label="Remove question"
                 onClick={() =>
                   onChange({
                     ...quiz,
@@ -80,15 +94,10 @@ export function QuizEditor({
         ))}
       </div>
 
-      <Button
-        type="button"
-        variant="secondary"
-        onClick={() =>
-          onChange({ ...quiz, questions: [...quiz.questions, BLANK_QUESTION[addType]] })
-        }
-      >
-        + Add question
-      </Button>
+      <AddButton
+        label="+ Add question"
+        onClick={() => onChange({ ...quiz, questions: [...quiz.questions, BLANK_QUESTION[addType]] })}
+      />
     </div>
   );
 }

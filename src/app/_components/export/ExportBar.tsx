@@ -24,20 +24,20 @@ export function ExportBar({
   };
 
   return (
-    <div className="flex gap-3">
+    <div className="flex flex-wrap gap-2">
       <Button
         variant="secondary"
         disabled={disabled || exporting !== null}
         onClick={() => runExport("pdf", onExportPdf)}
       >
-        {exporting === "pdf" ? "Preparing…" : "Download PDF"}
+        {exporting === "pdf" ? "Preparing…" : "↓ PDF"}
       </Button>
       <Button
         variant="secondary"
         disabled={disabled || exporting !== null}
         onClick={() => runExport("docx", onExportDocx)}
       >
-        {exporting === "docx" ? "Preparing…" : "Download Word (.docx)"}
+        {exporting === "docx" ? "Preparing…" : "↓ Word (.docx)"}
       </Button>
     </div>
   );

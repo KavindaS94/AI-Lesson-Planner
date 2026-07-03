@@ -63,39 +63,46 @@ export function QuizWorkspace({ initialTopic }: { initialTopic?: string }) {
   const quiz = state.status === "success" ? state.quiz : null;
 
   return (
-    <div className="mx-auto max-w-3xl space-y-8 px-4 py-8">
-      <div>
-        <h1 className="text-2xl font-semibold text-gray-900">Quiz & Worksheet Builder</h1>
-        <p className="mt-1 text-sm text-gray-600">
+    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+      <div className="mb-8">
+        <p className="text-sm font-semibold text-blue-600">AI-Powered</p>
+        <h1 className="mt-1 text-3xl font-bold tracking-tight text-gray-900">
+          Quiz &amp; Worksheet Builder
+        </h1>
+        <p className="mt-2 text-base text-gray-600">
           Choose question types and a topic to generate a quiz or worksheet.
         </p>
       </div>
 
-      <QuizForm
-        onSubmit={generate}
-        disabled={isLoading}
-        initialValues={
-          state.status !== "idle"
-            ? state.lastRequest
-            : initialTopic
-              ? {
-                  topic: initialTopic,
-                  questionTypes: ["mcq"],
-                  questionCount: 5,
-                  difficulty: "medium",
-                }
-              : undefined
-        }
-      />
+      <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
+        <QuizForm
+          onSubmit={generate}
+          disabled={isLoading}
+          initialValues={
+            state.status !== "idle"
+              ? state.lastRequest
+              : initialTopic
+                ? {
+                    topic: initialTopic,
+                    questionTypes: ["mcq"],
+                    questionCount: 5,
+                    difficulty: "medium",
+                  }
+                : undefined
+          }
+        />
 
-      {isLoading && <Spinner label="Generating quiz…" />}
+        {isLoading && <Spinner label="Generating quiz…" />}
 
-      {state.status === "error" && (
-        <ErrorBanner message={state.message} onRetry={() => generate(state.lastRequest)} />
-      )}
+        {state.status === "error" && (
+          <div className="mt-6">
+            <ErrorBanner message={state.message} onRetry={() => generate(state.lastRequest)} />
+          </div>
+        )}
+      </div>
 
       {quiz && (
-        <div className="space-y-6 border-t border-gray-200 pt-6">
+        <div className="mt-8 space-y-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
           <ExportBar
             disabled={false}
             onExportPdf={async () => {

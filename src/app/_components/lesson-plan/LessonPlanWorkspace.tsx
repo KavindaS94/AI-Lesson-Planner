@@ -65,45 +65,54 @@ export function LessonPlanWorkspace() {
   const topic = state.status === "success" ? state.lastRequest.topic : null;
 
   return (
-    <div className="mx-auto max-w-3xl space-y-8 px-4 py-8">
-      <div>
-        <h1 className="text-2xl font-semibold text-gray-900">Lesson Plan Generator</h1>
-        <p className="mt-1 text-sm text-gray-600">
+    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+      <div className="mb-8">
+        <p className="text-sm font-semibold text-blue-600">AI-Powered</p>
+        <h1 className="mt-1 text-3xl font-bold tracking-tight text-gray-900">
+          Lesson Plan Generator
+        </h1>
+        <p className="mt-2 text-base text-gray-600">
           Enter a subject, grade level, topic, and duration to generate a full lesson plan.
         </p>
       </div>
 
-      <LessonPlanForm
-        onSubmit={generate}
-        disabled={isLoading}
-        initialValues={state.status !== "idle" ? state.lastRequest : undefined}
-      />
+      <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
+        <LessonPlanForm
+          onSubmit={generate}
+          disabled={isLoading}
+          initialValues={state.status !== "idle" ? state.lastRequest : undefined}
+        />
 
-      {isLoading && <Spinner label="Generating lesson plan…" />}
+        {isLoading && <Spinner label="Generating lesson plan…" />}
 
-      {state.status === "error" && (
-        <ErrorBanner message={state.message} onRetry={() => generate(state.lastRequest)} />
-      )}
+        {state.status === "error" && (
+          <div className="mt-6">
+            <ErrorBanner message={state.message} onRetry={() => generate(state.lastRequest)} />
+          </div>
+        )}
+      </div>
 
       {plan && topic && (
-        <div className="space-y-6 border-t border-gray-200 pt-6">
-          <Link
-            href={`/quiz?topic=${encodeURIComponent(topic)}`}
-            className="inline-block text-sm font-medium text-blue-600 hover:underline"
-          >
-            Build a matching quiz →
-          </Link>
-          <ExportBar
-            disabled={false}
-            onExportPdf={async () => {
-              const { buildLessonPlanPdfBlob } = await import("@/lib/export/lessonPlanPdf");
-              downloadBlob(await buildLessonPlanPdfBlob(plan), `${plan.title || "lesson-plan"}.pdf`);
-            }}
-            onExportDocx={async () => {
-              const { buildLessonPlanDocxBlob } = await import("@/lib/export/lessonPlanDocx");
-              downloadBlob(await buildLessonPlanDocxBlob(plan), `${plan.title || "lesson-plan"}.docx`);
-            }}
-          />
+        <div className="mt-8 space-y-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <Link
+              href={`/quiz?topic=${encodeURIComponent(topic)}`}
+              className="text-sm font-medium text-blue-600 hover:underline"
+            >
+              Build a matching quiz →
+            </Link>
+            <ExportBar
+              disabled={false}
+              onExportPdf={async () => {
+                const { buildLessonPlanPdfBlob } = await import("@/lib/export/lessonPlanPdf");
+                downloadBlob(await buildLessonPlanPdfBlob(plan), `${plan.title || "lesson-plan"}.pdf`);
+              }}
+              onExportDocx={async () => {
+                const { buildLessonPlanDocxBlob } = await import("@/lib/export/lessonPlanDocx");
+                downloadBlob(await buildLessonPlanDocxBlob(plan), `${plan.title || "lesson-plan"}.docx`);
+              }}
+            />
+          </div>
           <LessonPlanEditor plan={plan} onChange={(next) => dispatch({ type: "edit", plan: next })} />
         </div>
       )}

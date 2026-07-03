@@ -13,7 +13,7 @@ export function ShortAnswerQuestionEditor({
   onChange: (question: ShortAnswerQuestion) => void;
 }) {
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <TextArea
         label="Question"
         rows={2}
