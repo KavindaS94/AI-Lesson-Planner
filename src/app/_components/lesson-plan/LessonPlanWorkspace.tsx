@@ -96,7 +96,7 @@ export function LessonPlanWorkspace() {
         <div className="mt-8 space-y-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <Link
-              href={`/quiz?topic=${encodeURIComponent(topic)}`}
+              href={`/dashboard/quiz?topic=${encodeURIComponent(topic)}`}
               className="text-sm font-medium text-blue-600 hover:underline"
             >
               Build a matching quiz →
