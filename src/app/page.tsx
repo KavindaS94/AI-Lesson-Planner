@@ -122,7 +122,19 @@ export default function MarketingPage() {
       <main className="flex-1">
         {/* Hero */}
         <section className="relative overflow-hidden">
-          <div className="graph-paper absolute inset-0" aria-hidden />
+          <div
+            className="absolute inset-0 bg-gradient-to-br from-blue-50 via-sky-50/80 to-white"
+            aria-hidden
+          />
+          <div
+            className="absolute -right-24 top-0 h-72 w-72 rounded-full bg-blue-200/40 blur-3xl sm:h-96 sm:w-96"
+            aria-hidden
+          />
+          <div
+            className="absolute -bottom-32 -left-16 h-64 w-64 rounded-full bg-indigo-200/30 blur-3xl sm:h-80 sm:w-80"
+            aria-hidden
+          />
+          <div className="graph-paper absolute inset-0 opacity-70" aria-hidden />
           <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-2 lg:gap-8 lg:px-8">
             <div className="fade-up">
               <Eyebrow>For K–12 teachers</Eyebrow>
