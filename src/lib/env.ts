@@ -2,6 +2,8 @@ import { z } from "zod";
 
 const EnvSchema = z.object({
   GEMINI_API_KEY: z.string().min(1),
+  BETTER_AUTH_SECRET: z.string().min(32),
+  BETTER_AUTH_URL: z.string().min(1),
 });
 
 let cached: z.infer<typeof EnvSchema> | undefined;
