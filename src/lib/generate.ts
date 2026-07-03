@@ -1,7 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import type { z } from "zod";
-import { anthropic, MODEL } from "@/lib/anthropic";
+import { getAnthropicClient, MODEL } from "@/lib/anthropic";
 
 export class GenerationError extends Error {
   status: number;
@@ -24,7 +24,7 @@ export async function generateStructured<Schema extends z.ZodType>(params: {
   const format = zodOutputFormat(schema);
 
   const attempt = (reinforce: boolean) =>
-    anthropic.messages.parse({
+    getAnthropicClient().messages.parse({
       model: MODEL,
       max_tokens: 4096,
       system: reinforce ? `${system}${REINFORCEMENT}` : system,
