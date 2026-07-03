@@ -32,7 +32,7 @@ export function SignupForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <TextField
         label="Name"
         autoComplete="name"
@@ -40,6 +40,7 @@ export function SignupForm() {
         value={name}
         onChange={(e) => setName(e.target.value)}
         disabled={status === "loading"}
+        className="py-3"
       />
       <TextField
         label="Email"
@@ -49,6 +50,7 @@ export function SignupForm() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         disabled={status === "loading"}
+        className="py-3"
       />
       <TextField
         label="Password"
@@ -59,11 +61,12 @@ export function SignupForm() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         disabled={status === "loading"}
+        className="py-3"
       />
 
       {status === "error" && <ErrorBanner message={error} />}
 
-      <Button type="submit" disabled={status === "loading"} className="w-full">
+      <Button type="submit" disabled={status === "loading"} className="mt-2 w-full py-3">
         {status === "loading" ? "Creating account…" : "Create account"}
       </Button>
     </form>

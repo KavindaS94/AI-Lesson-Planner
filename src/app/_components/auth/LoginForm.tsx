@@ -31,7 +31,7 @@ export function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <TextField
         label="Email"
         type="email"
@@ -40,6 +40,7 @@ export function LoginForm() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         disabled={status === "loading"}
+        className="py-3"
       />
       <TextField
         label="Password"
@@ -49,11 +50,12 @@ export function LoginForm() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         disabled={status === "loading"}
+        className="py-3"
       />
 
       {status === "error" && <ErrorBanner message={error} />}
 
-      <Button type="submit" disabled={status === "loading"} className="w-full">
+      <Button type="submit" disabled={status === "loading"} className="mt-2 w-full py-3">
         {status === "loading" ? "Signing in…" : "Sign in"}
       </Button>
     </form>
