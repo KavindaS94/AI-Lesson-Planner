@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { LessonPlanRequestSchema, LessonPlanSchema } from "@/lib/schemas/lessonPlan";
 import { generateStructured, GenerationError } from "@/lib/generate";
+import { requireSession } from "@/lib/require-session";
 
 export async function POST(req: NextRequest) {
+  const { session, response } = await requireSession(req.headers);
+  if (!session) return response;
+
   const body = await req.json().catch(() => null);
   const parsedRequest = LessonPlanRequestSchema.safeParse(body);
 
